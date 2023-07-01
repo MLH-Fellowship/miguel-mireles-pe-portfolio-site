@@ -43,7 +43,6 @@
                 </ul>
             </nav>
         </div>
-        <script defer src="{{ url_for('static', filename='scripts/navmenu.js') }}"></script> 
     </header>
 
     <div id="hobbies" class="hobbies-section section">
@@ -62,5 +61,7 @@
             </div>
         {% endfor %}
     </div>
+
+    <script src="{{ url_for('static', filename='scripts/navmenu.js') }}"></script> 
 </body>
 </html>

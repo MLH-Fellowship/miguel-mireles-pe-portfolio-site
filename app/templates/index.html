@@ -46,7 +46,6 @@
                 </ul>
             </nav>
         </div>
-        <script defer src="{{ url_for('static', filename='scripts/navmenu.js') }}"></script> 
     </header>
 
     <div class="profile">
@@ -166,6 +165,8 @@
             {{ map|safe }}
       </div>
     </div> 
+
     <script src="{{ url_for('static', filename='scripts/opentab.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/navmenu.js') }}"></script> 
 </body>
 </html>
