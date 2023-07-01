@@ -46,92 +46,110 @@
                 </ul>
             </nav>
         </div>
-        <script defer src="{{ url_for('static', filename='scripts/navmenu.js') }}"></script> 
     </header>
 
     <div class="profile">
         <div id="profile-picture" class="profile-picture">
-            <!-- Miguel's Profile Picture -->
-            <img src="../static/img/IMG_0201.jpg" alt="Image 2">
-            <!-- Add your profile picture here -->
-            <img src="./static/img/aerin.jpg" alt="Aerin Brown">
-            <!-- Add your profile picture here -->
-            <img src="./static/img/gibbonhug.jpg" alt="Image 4">
+            {% for member in members %}
+            <img src="{{ member.image }}" alt="{{ member.name }}">
+            {% endfor %}
         </div>
         <h1>{{ title }}</h1>
     </div>
+    
+    <!-- About Us Section -->
+    <div class="about-me section" id="about">
+        <h2>About {% if members|length > 1 %}Us {% else %}Me {% endif %}</h2>
+        {% if members|length > 1 %}
+        <div class="member-tabs">
+            {% for member in members %}
+            <div id="tab-about-{{ loop.index }}" class="tab-button{% if loop.index == 1 %} active{% endif %}" data-section='about' onclick="openTab('about', '{{ loop.index }}')">
+                {{ member.name }} 
+            </div>
+        {% endfor %}
+        </div>
+        {% endif %}
 
-    <div class="about-us section" id="about">
-      <! -- About Us Section -->
-        <h2><u>About Us</u></h2>
-        {% for person in about_us %}
-            <h3>{{person.name}}</h3>
-            <p>{{person.text}}</p>
-            <hr>
+        {% for member in members %}
+        <div id="content-about-{{ loop.index }}" class="about-tab{% if loop.index == 1 %} active{% endif %}">
+            <div class="about-info">
+                <h3>{{ member.name }} {{ member.lastname}}</h3>
+                <p>{{ member.about }}</p>
+            </div>
+        </div>
         {% endfor %}
     </div>
+
+    <!-- Work Experience Section -->
+    <div class="work section" id="work">
+        <h2>Work Experience</h2>
+        {% if members|length > 1 %}
+        <div class="member-tabs">
+            {% for member in members %}
+            <div id="tab-work-{{ loop.index }}" class="tab-button{% if loop.index == 1 %} active{% endif %}" data-section='work' onclick="openTab('work', '{{ loop.index }}')">
+                {{ member.name }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% for member in members %}
+    <div id="content-work-{{ loop.index }}" class="work-tab{% if loop.index == 1 %} active{% endif %}">
+      {% for work in member.experience %}
+        <div class="work-item">
+          <!-- logo, position, company, date, description -->
+          <div class="work-logo">
+            <img src="{{ work.logo }}" alt="{{ work.company }}">
+          </div>
+          <div class="work-info">
+            <h3>{{ work.position }}</h3>
+            <h4>{{ work.company }}</h4>
+            <p><i>{{ work.dates }}</i></p>
+            <p>{{ work.description }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+    </div> 
   
-  <div class="education-section">  
     <!-- Education Section -->
     <div class="education-section section" id="education">
         <h2>Education</h2>
-        
+        {% if members|length > 1 %}
         <div class="member-tabs">
-            {% for member in members_education %}
-              <button id="tab-member-{{ loop.index }}" class="tab-button{% if loop.index == 1 %} active{% endif %}" onclick="openTab('member', '{{ loop.index }}')">
+            {% for member in members %}
+            <div id="tab-education-{{ loop.index }}" class="tab-button{% if loop.index == 1 %} active{% endif %}" data-section='education' onclick="openTab('education', '{{ loop.index }}')">
                 {{ member.name }}
-              </button>
-            {% endfor %}
-        </div>
-
-        <div class="timeline-content">
-            {% for member in members_education %}
-            <ul id="content-member-{{ loop.index }}" class="timeline{% if loop.index == 1 %} active{% endif %}">
-                {% for education in member.education %}
-                <li class="timeline-item">
-                    <div class="timeline-date">{{ education.date }}</div>
-                    <div class="timeline-education">
-                        <h3>{{ education.degree }}</h3>
-                        <p>{{ education.institution }}</p>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-            {% endfor %}
-        </div>
-        <script defer src="{{ url_for('static', filename='scripts/opentab.js') }}"></script>
-    </div>
-    
-    <!-- Work Experience Section -->
-    <div class="work section" id="work">
-        <h2><u>Work Experience</u></h2>
-
-        <div class="work-selector">
-            {% for person in people %}
-                <button class="work-selector-button inactive {{person}}" onclick="openWorkTab('{{person}}')">
-                    {{person}}
-                </button>
-            {% endfor %}
-        </div>
-
-        {% for experience in experiences %}
-            <div class="work-experience {{experience.holder}} inactive">
-                <img src="./static/img/{{experience.photo}}" />
-                <div class="position"><h3>{{experience.position}}</h3></div>
-                <div class="company"><h4>{{experience.company}}</h4></div>
-                <div class="dates"><i>{{experience.dates}}</i><hr></div>
-                <div class="description">{{experience.description}}</div>
             </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% for member in members %}
+    <div id="content-education-{{ loop.index }}" class="education-tab{% if loop.index == 1 %} active{% endif %}">
+      <ul class="timeline">
+        {% for education in member.education %}
+          <li class="timeline-item">
+            <div class="timeline-date">{{ education.date }}</div>
+            <div class="timeline-education">
+              <h3>{{ education.degree }}</h3>
+              <p>{{ education.institution }}</p>
+            </div>
+          </li>
         {% endfor %}
-      
-      <script defer src="{{ url_for('static', filename='scripts/openworktab.js') }}"></script>
-    </div> 
+      </ul>
+    </div>
+  {% endfor %}
+
+    </div>
     
     <!-- Map Section -->
     <div class="map-container section" id="map">
         <div class="map-text">
-            <h2>Places we've been to</h2>
-            <p>Here are some of the places we've been to.</p>
+            <h2>Places {% if members|length > 1 %}we {% else %}I {% endif %} have been to</h2>
+            <p>Here are some of the places {% if members|length > 1 %}we {% else %}I {% endif %} have been to.</p>
+            {% if members|length > 1 %}
             <div class="color-boxes">
                 {% for member in members %}
                     <div class="color-box-container">
@@ -141,10 +159,14 @@
                     </div>
                 {% endfor %}
             </div>
+            {% endif %}
         </div>
         <div class="map">
             {{ map|safe }}
       </div>
     </div> 
+
+    <script src="{{ url_for('static', filename='scripts/opentab.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/navmenu.js') }}"></script> 
 </body>
 </html>

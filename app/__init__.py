@@ -8,38 +8,6 @@ from pathlib import Path
 load_dotenv()
 app = Flask(__name__)
 
-def load_work_experience():
-    work_file_path = Path(__file__).resolve().parent / 'static' / 'data' / 'work.json'
-
-    with open(work_file_path, 'r') as f:
-        work_data = json.load(f)
-    
-    return work_data['work']
-
-def load_fellows():
-    work_file_path = Path(__file__).resolve().parent / 'static' / 'data' / 'work.json'
-
-    with open(work_file_path, 'r') as f:
-        work_data = json.load(f)
-    
-    return work_data['fellows']
-
-def load_about_us_data():
-    about_file_path = Path(__file__).resolve().parent / 'static' / 'data' / 'about.json'
-
-    with open(about_file_path, 'r') as f:
-        about_us_data = json.load(f)
-    
-    return about_us_data['about']
-
-def load_member_education_data():
-    education_file_path = Path(__file__).resolve().parent / 'static' / 'data' / 'education.json'
-
-    with open(education_file_path, 'r') as f:
-        members_education_data = json.load(f)
-
-    return members_education_data['members']
-
 def create_marker(location, color):
     marker = folium.Marker(
         location=[location['lat'], location['lon']],
@@ -62,7 +30,6 @@ def create_marker(location, color):
     )
     return marker
 
-
 def create_map(members):
     map = folium.Map(min_zoom=2)
 
@@ -78,10 +45,9 @@ def create_map(members):
     map_html = map.get_root()._repr_html_()
     return map_html
 
-
-def load_member_locations():
+def load_member_data():
     locations_file_path = Path(__file__).resolve(
-    ).parent / 'static' / 'data' / 'locations.json'
+    ).parent / 'static' / 'data' / 'data.json'
     with open(locations_file_path, 'r') as f:
         data = json.load(f)
         members = data['members']
@@ -97,14 +63,14 @@ def load_member_hobby_data():
 
 @app.route('/')
 def index():
-    members = load_member_locations()
-    members_education = load_member_education_data()
+    members = load_member_data()
+
     map_html = create_map(members)
     
-    return render_template('index.html', title="MLH Fellow", url=os.getenv("URL"), map=map_html, members=members, members_education=members_education, experiences=load_work_experience(), people=load_fellows(), about_us=load_about_us_data())
+    return render_template('index.html', title="MLH Fellow", url=os.getenv("URL"), map=map_html, members=members)
 
 @app.route('/hobbies')
 def hobbies():
-    members_hobbies = load_member_hobby_data()
+    members = load_member_data()
     
-    return render_template('hobbies.html', title="Hobbies", url=os.getenv("URL"), members_hobbies = members_hobbies)
+    return render_template('hobbies.html', title="Hobbies", url=os.getenv("URL"), members=members)

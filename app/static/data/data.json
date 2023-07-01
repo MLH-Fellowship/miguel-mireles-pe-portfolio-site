@@ -1,0 +1,93 @@
+{
+  "members": [
+    {
+      "name": "Miguel Ángel",
+      "lastname": "Mireles Vázquez",
+      "image": "../static/img/IMG_0201.jpg",
+      "color": "cadetblue",
+      "about":  "My name is Miguel Ángel Mireles Vázquez, and I am an incoming second-year student at Universidad de Guanajuato, pursuing a degree in Digital Systems and Robotics. I am passionate about exploring the fascinating world of technology and its applications in robotics and automation. Currently, I have the privilege of serving as the president of the IEEE Robotics and Automation Society student chapter at my university. In this role, I have the opportunity to collaborate with like-minded individuals and further deepen my understanding of robotics and automation. To ensure that I remain at the forefront of this rapidly-evolving field, I actively engage in coursework, internships, and personal projects.  I aspire to leverage my skills and knowledge to contribute to transformative projects that have the potential to shape the future.",
+      "experience": [
+        {
+          "logo": "../static/img/fellowship-logo.png",
+          "position": "Site Reliability Engineering Fellow",
+          "company": "MLH Fellowship",
+          "dates": "June 2023 - September 2023",
+          "description": "The Site Reliability Engineering Program is an opportunity to learn how to be a great Site Reliability Engineer by completing an interactive curriculum getting you hands on experience with the tools used by thousands of companies around the world."
+        },
+        {
+          "logo": "../static/img/IEEE_ras.webp",
+          "position": "President",
+          "company": "IEEE Robotics and Automation Society",
+          "dates": "2021 - Present",
+          "description": "I am currently serving as the president of the IEEE Robotics and Automation Society student chapter at my university. In this role, I have the opportunity to collaborate with like-minded individuals and further deepen my understanding of robotics and automation."
+        }
+      ],
+      "education": [
+        {
+          "date": "Graduating in 2026",
+          "degree": "B. S. Digital Systems and Robotics",
+          "institution": "Universidad de Guanajuato"
+        },
+        {
+          "date": "2018 - 2021",
+          "degree": "Mechatronics Technician",
+          "institution": "ENMS Salamanca"
+        }
+      ],
+      "locations": [
+        {
+          "name": "Los Colomos Forest",
+          "lat": 20.7077,
+          "lon": -103.39,
+          "description": "This is a It is a park that is made up of approximately 92 hectares, where there is a peculiar Japanese garden that has vegetation characteristic of this eastern nation, as well as a beautiful artificial lake with goldfish, basalt rocks, a bridge and a castle that was built in the early twentieth century."
+        },
+        {
+          "name": "Riviera Maya",
+          "lat": 20.63138,
+          "lon": -87.07305,
+          "description": "The Riviera Maya is a tourism and resort district located south of Cancun, Mexico."
+        },
+        {
+          "name": "Puerto Vallarta",
+          "lat": 20.6534,
+          "lon": -105.2253,
+          "description": "Puerto Vallarta is a Mexican beach resort city situated on the Pacific Ocean's Bahía de Banderas in the Mexican state of Jalisco."
+        },
+        {
+          "name": "El Pipila Monument",
+          "lat": 21.0167,
+          "lon": -101.25,
+          "description": "The Monumento al Pípila is a monument in honor of Juan José de los Reyes Martínez Amaro, who burned out the main door of the Castillo de Granaditas on September 28, 1810. It is located in the city of Guanajuato, Guanajuato."
+        },
+        {
+          "name": "Acapulco",
+          "lat": 16.8531,
+          "lon": -99.8237,
+          "description": "Acapulco is a city and major seaport in the state of Guerrero on the Pacific coast of Mexico, 380 kilometres (240 mi) south of Mexico City."
+        }
+      ],
+      "hobbies": [
+        {
+            "name": "Hiking",
+            "description": "I love hiking and being outdoors. I've hiked in the Grand Canyon, Yosemite, and the Smoky Mountains.",
+            "img": "../static/img/hobby-hiking.jpg"
+        },
+        {
+            "name": "Reading",
+            "description": "I love reading. I'm currently reading The Lord of the Rings.",
+            "img": "../static/img/hobby-reading.jpg"
+        },
+        {
+            "name": "Origami",
+            "description": "I love origami. I've made a lot of origami animals.",
+            "img": "../static/img/hobby-origami.jpg"
+        },
+        {
+            "name": "Chess",
+            "description": "I love chess. I've been playing chess since I was 5 years old.",
+            "img": "../static/img/hobby-chess.jpg"
+        }
+      ]
+    }
+  ]
+}
