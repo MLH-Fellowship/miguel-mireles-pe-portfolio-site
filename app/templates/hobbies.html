@@ -16,6 +16,8 @@
 
     <link lang='sass' rel="stylesheet" href="./static/styles/main.css">
     <link rel='icon' href='./static/img/favicon.ico' type='image/x-icon' />
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a489d226ee.js" crossorigin="anonymous"></script>
     <title>{{ title }}</title>
 </head>
 
@@ -27,23 +29,38 @@
                     <img src="./static/img/logo.svg" />
                 </div>
             </a>
+            <div class="nav-icon" onclick="toggleNav()">
+                <i class="fas fa-bars" id="icon"></i>
+            </div>
+            <nav>
+                <ul class="nav-menu" id="toggle-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="/#work">Experience</a></li>
+                    <li><a href="/hobbies">Hobbies</a></li>
+                    <li><a href="/#education">Education</a></li>
+                    <li><a href="/#map">Map</a></li>
+                </ul>
+            </nav>
         </div>
+        <script defer src="{{ url_for('static', filename='scripts/navmenu.js') }}"></script> 
     </header>
 
-    <div>
-        {% for member in members_hobbies %}
+    <div id="hobbies" class="hobbies-section section">
+        {% for member in members %}
+        <h2>{{ member.name }}'s Hobbies</h2>
             <div class="hobby-container">
-                <h2>{{ member["name"] }}'s Hobbies</h2>
-                <div class="member-hobby-flexbox">
-                    {% for hobby_data in member["hobbies"] %}
-                    <div class="hobby">
-                        <h3>{{ hobby_data["hobby"] }}</h3>
-                        <img src="{{ hobby_data['img'] }}">
+                {% for hobby_data in member.hobbies %}
+                    <div class="hobby-container-card">
+                        <img class="card-image" src="{{ hobby_data['img'] }}">
+                        <div class="card-content">
+                            <h3>{{ hobby_data['name'] }}</h3>
+                            <p>{{ hobby_data['description'] }}</p>
+                        </div>
                     </div>
-                    {% endfor %}
-                </div>
+                {% endfor %}
             </div>
         {% endfor %}
-\    </div>
+    </div>
 </body>
 </html>
