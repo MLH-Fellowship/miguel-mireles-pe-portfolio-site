@@ -101,6 +101,12 @@ def hobbies():
     
     return render_template('hobbies.html', title="Hobbies", url=os.getenv("URL"), members=members)
 
+@app.route('/timeline')
+def timeline():
+    timeline_posts = TimelinePost.select().order_by(TimelinePost.created_at.desc())
+
+    return render_template('timeline.html', title="Timeline", url=os.getenv("URL"), posts=timeline_posts)
+
 @app.route('/api/timeline_post', methods=['POST'])
 def post_time_line_post():
     name = request.form['name']
