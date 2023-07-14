@@ -8,7 +8,7 @@ import datetime
 from playhouse.shortcuts import model_to_dict
 from pathlib import Path
 
-load_dotenv('/home/mamv3x3/MLH-fellowship/miguel-mireles-pe-portfolio-site/example.env')
+load_dotenv('./example.env')
 
 app = Flask(__name__)
 
