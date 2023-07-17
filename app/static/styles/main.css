@@ -697,6 +697,15 @@ p {
     display: none;
 }
 
+.form-error-message {
+    color: red;
+    font-size: 0.8em;
+    font-weight: 300;
+    margin-top: 5px;
+    width: 100%;
+    text-align: right;
+}
+
 
 /* Media Queries */
 @media (max-width: 920px) {
