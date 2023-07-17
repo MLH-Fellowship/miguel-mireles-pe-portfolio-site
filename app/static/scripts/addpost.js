@@ -1,3 +1,49 @@
+function validateFormInput(input, errorElement, validationRegex, requiredMessage, invalidMessage) {
+    errorElement.innerHTML = '';
+    if (input.value.trim() === '') {
+        errorElement.innerHTML = requiredMessage;
+        return false;
+    }
+    if (!validationRegex.test(input.value)) {
+        errorElement.innerHTML = invalidMessage;
+        return false;
+    }
+    return true;
+}
+
+function checkFormValidity(form, nameError, emailError, contentError) {
+    var valid = true;
+    const nameRegex = /^[\p{L}\p{M}]+(?:\p{Zs}[\p{L}\p{M}]+)*$|^[\p{L}\p{M}]+$/u;
+    const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/u;
+
+    valid &= validateFormInput(
+        form.name,
+        nameError,
+        nameRegex,
+        'Name is required',
+        'Name is invalid'
+    );
+
+    valid &= validateFormInput(
+        form.email,
+        emailError,
+        emailRegex,
+        'Email is required',
+        'Email is invalid'
+    );
+
+    valid &= validateFormInput(
+        form.content,
+        contentError,
+        /.+/,
+        'Content is required',
+        ''
+    );
+
+    return valid;
+}
+
+
 document.getElementById('addTimelinePost').addEventListener('click', function(event) {
     const nameError = document.getElementById('name-error');
     const emailError = document.getElementById('email-error');
@@ -6,33 +52,7 @@ document.getElementById('addTimelinePost').addEventListener('click', function(ev
 
     var form = document.getElementById('timelineForm');
 
-    if (!form.checkValidity()) {
-        // Append error message to the form
-        nameError.innerHTML = '';
-        emailError.innerHTML = '';
-        contentError.innerHTML = '';
-
-        // If email input is not valid, append error message 
-        var email = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-        if (!email.test(form.email.value)) {
-            emailError.innerHTML = 'Email is invalid';
-        }
-        var name = /^[\p{L}\p{M}]+(?:\p{Zs}[\p{L}\p{M}]+)+$/u;
-        if (!name.test(form.name.value)) {
-            nameError.innerHTML = 'Name is invalid';
-        }
-
-        // If name, email, or content is empty, append error message
-        if (form.name.value === '') {
-            nameError.innerHTML = 'Name is required';
-        }
-        if (form.email.value === '') {
-            emailError.innerHTML = 'Email is required';
-        }
-        if (form.content.value === '') {
-            contentError.innerHTML = 'Content is required';
-        }
-
+    if (!checkFormValidity(form, nameError, emailError, contentError)) {
         return;
     }
     
