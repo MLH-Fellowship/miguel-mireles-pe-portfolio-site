@@ -1,11 +1,11 @@
 {
   "members": [
     {
-      "name": "Miguel Ángel",
-      "lastname": "Mireles Vázquez",
+      "name": "Miguel Angel",
+      "lastname": "Mireles Vazquez",
       "image": "../static/img/IMG_0201.jpg",
       "color": "cadetblue",
-      "about":  "My name is Miguel Ángel Mireles Vázquez, and I am an incoming second-year student at Universidad de Guanajuato, pursuing a degree in Digital Systems and Robotics. I am passionate about exploring the fascinating world of technology and its applications in robotics and automation. Currently, I have the privilege of serving as the president of the IEEE Robotics and Automation Society student chapter at my university. In this role, I have the opportunity to collaborate with like-minded individuals and further deepen my understanding of robotics and automation. To ensure that I remain at the forefront of this rapidly-evolving field, I actively engage in coursework, internships, and personal projects.  I aspire to leverage my skills and knowledge to contribute to transformative projects that have the potential to shape the future.",
+      "about":  "My name is Miguel Angel Mireles Vazquez, and I am an incoming second-year student at Universidad de Guanajuato, pursuing a degree in Digital Systems and Robotics. I am passionate about exploring the fascinating world of technology and its applications in robotics and automation. Currently, I have the privilege of serving as the president of the IEEE Robotics and Automation Society student chapter at my university. In this role, I have the opportunity to collaborate with like-minded individuals and further deepen my understanding of robotics and automation. To ensure that I remain at the forefront of this rapidly-evolving field, I actively engage in coursework, internships, and personal projects.  I aspire to leverage my skills and knowledge to contribute to transformative projects that have the potential to shape the future.",
       "experience": [
         {
           "logo": "../static/img/fellowship-logo.png",
