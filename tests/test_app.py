@@ -55,8 +55,16 @@ class AppTestCase(unittest.TestCase):
         assert json["timeline_posts"][0]["content"] == "Hello world, I'm John Smith."
         
     def test_timeline_page(self):
-        # TODO: Add more tests relating to timeline page
-        pass
+        response = self.client.get('/timeline')
+        assert response.status_code == 200
+        html = response.get_data(as_text=True)
+        assert '<title>Timeline</title>' in html
+        assert '<h2>Timeline</h2>' in html
+        assert '<label for="name">Name</label>' in html
+        assert '<label for="email">Email</label>' in html
+        assert '<label for="content">Content</label>' in html
+        assert '<button id="addTimelinePost"' in html
+        assert '<h2>Records</h2>' in html
         
     def test_malformed_timeline_post(self):
         # POST request missing name
