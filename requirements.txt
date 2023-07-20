@@ -15,6 +15,7 @@ peewee==3.14.10
 pycparser==2.21
 PyMySQL==1.0.2
 python-dotenv==0.17.1
+regex==2023.6.3
 requests==2.31.0
 urllib3==2.0.3
 Werkzeug==2.0.1
