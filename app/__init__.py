@@ -123,17 +123,18 @@ def validate_name(name):
     if not name:
         return 'Invalid name'
     name_regex = r'^[\p{L}\p{M}]+(?:\p{Zs}[\p{L}\p{M}]+)*$|^[\p{L}\p{M}]+$'
-    return validate_form_input(name, 'Name format is invalid', name_regex)
+    return validate_form_input(name, 'Invalid name', name_regex)
 
 def validate_email(email):
     if not email:
         return 'Invalid email'
     email_regex = r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
-    return validate_form_input(email, 'Email format is invalid', email_regex)
+    return validate_form_input(email, 'Invalid email', email_regex)
 
 def validate_content(content):
     if not content:
         return 'Invalid content'
+    return validate_form_input(content, 'Invalid content', r'.+')
 
 @app.route('/api/timeline_post', methods=['POST'])
 def post_time_line_post():
