@@ -159,7 +159,7 @@ def post_time_line_post():
 
     timeline_post = TimelinePost.create(name=name, email=email, content=content)
 
-    return jsonify(model_to_dict(timeline_post))
+    return model_to_dict(timeline_post), 200
 
 @app.route('/api/timeline_post', methods=['GET'])
 def get_time_line_post():
@@ -168,7 +168,7 @@ def get_time_line_post():
             model_to_dict(p)
             for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
         ]
-    }
+    }, 200
 
 @app.route('/api/timeline_post/<id>', methods=['DELETE'])
 def delete_time_line_post(id):
