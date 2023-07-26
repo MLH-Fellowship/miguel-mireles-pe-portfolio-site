@@ -1,6 +1,8 @@
 from peewee import *
 import os
 from flask import Flask, render_template, request, jsonify
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from dotenv import load_dotenv
 import folium
 import json
@@ -12,6 +14,11 @@ import regex
 load_dotenv('./example.env')
 
 app = Flask(__name__)
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["10 per minute"]
+)
 
 if os.getenv("TESTING") == "true":
     print("Running in test mode")
@@ -136,7 +143,10 @@ def validate_content(content):
         return 'Invalid content'
     return validate_form_input(content, 'Invalid content', r'.+')
 
+# Limit POST requests to 10 per minute
+
 @app.route('/api/timeline_post', methods=['POST'])
+@limiter.limit("10/minute")
 def post_time_line_post():
     name = request.form.get('name')
     email = request.form.get('email')
