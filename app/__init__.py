@@ -1,7 +1,6 @@
 from peewee import *
 import os
 from flask import Flask, render_template, request, jsonify
-from flask_limiter.util import get_remote_address
 from dotenv import load_dotenv
 import folium
 import json
