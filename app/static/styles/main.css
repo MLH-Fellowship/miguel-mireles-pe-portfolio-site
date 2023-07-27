@@ -706,6 +706,11 @@ p {
     text-align: right;
 }
 
+.form-error-message.request {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 
 /* Media Queries */
 @media (max-width: 920px) {

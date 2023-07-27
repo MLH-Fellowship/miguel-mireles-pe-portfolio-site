@@ -48,6 +48,7 @@ document.getElementById('addTimelinePost').addEventListener('click', function(ev
     const nameError = document.getElementById('name-error');
     const emailError = document.getElementById('email-error');
     const contentError = document.getElementById('content-error');
+    const requestError = document.getElementById('request-error');
     event.preventDefault();
 
     var form = document.getElementById('timelineForm');
@@ -62,7 +63,19 @@ document.getElementById('addTimelinePost').addEventListener('click', function(ev
         method: 'POST',
         body: payload
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            switch (response.status) {
+                case 429:
+                    throw new Error('Too many requests');
+                case 500:
+                    throw new Error('Internal server error');
+                default:
+                    throw new Error('Unknown error');
+            }
+        }
+        return response.json();
+    })
     .then(newPost => {
         // Add new post to the timeline
         const timelinePosts = document.querySelector('.timeline-posts');
@@ -93,6 +106,10 @@ document.getElementById('addTimelinePost').addEventListener('click', function(ev
         nameError.innerHTML = '';
         emailError.innerHTML = '';
         contentError.innerHTML = '';
+        requestError.innerHTML = '';
     })
-    .catch(error => console.error(error));
+    .catch(error => {
+        console.error(error);
+        requestError.innerHTML = error.message;
+    });
 });
