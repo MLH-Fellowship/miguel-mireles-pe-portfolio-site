@@ -8,6 +8,7 @@ import datetime
 from playhouse.shortcuts import model_to_dict
 from pathlib import Path
 import regex
+import random
 
 load_dotenv('./example.env')
 
@@ -66,7 +67,12 @@ def create_marker(location, color):
     return marker
 
 def create_map(members):
-    map = folium.Map(min_zoom=2)
+    random_start_location = random.choice(members)['locations'][0]
+    map = folium.Map(
+        location=[random_start_location['lat'], random_start_location['lon']],
+        zoom_start=2,
+        tiles='Stamen Terrain'
+    )
 
     for member in members:
         color = member['color']
