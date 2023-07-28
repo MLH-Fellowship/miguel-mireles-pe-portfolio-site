@@ -15,8 +15,6 @@ services:
     restart: always
     env_file:
       - example.env
-    environment:
-      - MYSQL_MAX_ALLOWED_PACKET=1073741824
     volumes:
       - mydatabase:/var/lib/mysql
 
