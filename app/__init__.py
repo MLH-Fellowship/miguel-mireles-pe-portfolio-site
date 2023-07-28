@@ -38,6 +38,11 @@ class TimelinePost(Model):
 mydb.connect()
 mydb.create_tables([TimelinePost])
 
+@app.teardown_appcontext
+def close_db(exeption):
+    if not mydb.is_closed():
+        mydb.close()
+
 def create_marker(location, color):
     marker = folium.Marker(
         location=[location['lat'], location['lon']],
