@@ -59,12 +59,12 @@ class AppTestCase(unittest.TestCase):
         assert response.status_code == 200
         html = response.get_data(as_text=True)
         assert '<title>Timeline</title>' in html
-        assert '<h2>Timeline</h2>' in html
+        assert '<h2 class="section-title">Timeline</h2>' in html
         assert '<label for="name">Name</label>' in html
         assert '<label for="email">Email</label>' in html
-        assert '<label for="content">Content</label>' in html
+        assert '<label for="content">Comment</label>' in html
         assert '<button id="addTimelinePost"' in html
-        assert '<h2>Records</h2>' in html
+        assert '<h2 class="section-title">Records</h2>' in html
         
     def test_malformed_timeline_post(self):
         # POST request missing name
