@@ -9,6 +9,7 @@ from playhouse.shortcuts import model_to_dict
 from pathlib import Path
 import regex
 import random
+import markdown
 
 load_dotenv('./example.env')
 
@@ -36,8 +37,18 @@ class TimelinePost(Model):
     class Meta:
         database = mydb
 
+class BlogPost(Model):
+    title = CharField()
+    content = TextField()
+    category = CharField()
+    image_url = CharField()
+    date_posted = DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        database = mydb
+
 mydb.connect()
-mydb.create_tables([TimelinePost])
+mydb.create_tables([TimelinePost, BlogPost])
 
 @app.teardown_appcontext
 def close_db(exeption):
@@ -121,6 +132,57 @@ def timeline():
     timeline_posts = TimelinePost.select().order_by(TimelinePost.created_at.desc())
 
     return render_template('timeline.html', title="Timeline", url=os.getenv("URL"), posts=timeline_posts)
+
+@app.route('/blog')
+def blog():
+    blog_posts = BlogPost.select().order_by(BlogPost.date_posted.desc())
+
+    return render_template('blog.html', title="Blog", url=os.getenv("URL"), posts=blog_posts)
+
+@app.route('/blog/<id>')
+def blog_post(id):
+    post = BlogPost.get_by_id(id)
+    content_html = markdown.markdown(post.content, extensions=['fenced_code'])
+    return render_template('blog_post.html', post=post, content=content_html)
+
+
+@app.route('/api/blog_posts', methods=['GET'])
+def get_blog_posts():
+    blog_posts = BlogPost.select().dicts()
+    return jsonify(list(blog_posts)), 200
+
+@app.route('/api/blog_posts/<id>', methods=['GET'])
+def get_blog_post(id):
+    try:
+        blog_post = BlogPost.get(BlogPost.id == id)
+    except BlogPost.DoesNotExist:
+        return jsonify({'error': 'Blog post not found'}), 404
+    return jsonify(model_to_dict(blog_post)), 200
+
+@app.route('/api/blog_posts', methods=['POST'])
+def post_blog_post():
+    data = request.get_json()
+    if 'title' not in data or 'content' not in data or 'category' not in data or 'image_url' not in data:
+        return jsonify({'error': 'Invalid request'}), 400
+    blog_post = BlogPost.create(
+        title=data['title'],
+        content=data['content'],
+        category=data['category'],
+        image_url=data['image_url']
+    )
+    return jsonify(model_to_dict(blog_post)), 200
+
+@app.route('/api/blog_posts/<id>', methods=['DELETE'])
+def delete_blog_post(id):
+    try:
+        blog_post = BlogPost.get_by_id(id)
+        blog_post.delete_instance()
+        return jsonify({'message': f'Successfully deleted blog post with id {id}'}), 200
+    except BlogPost.DoesNotExist:
+        return jsonify({'error': f'Blog post with id {id} does not exist'}), 404
+    except Exception as e:
+        return jsonify({'error': f'An error occurred while deleting the blog post: {str(e)}'}), 500
+
 
 # Malformed timeline post error handling
 def validate_form_input(input_value, error_message, validation_regex):

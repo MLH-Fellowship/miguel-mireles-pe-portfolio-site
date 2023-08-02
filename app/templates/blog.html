@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+    Blog
+{% endblock title %}
+
+{% block content %}
+    <section class="blog-section section">
+        <div class="tags top-tags">&lt;h2&gt;</div>
+        <h2 class="section-title">{{ title }}</h2>
+        <div class="tags bottom-tags">&lt;/h2&gt;</div>
+        <div class="blog-card-container">
+            {% for post in posts %}
+            <div class="blog-card" onclick="window.location.href='/blog/{{ post.id }}'">
+                <div class="blog-card-header">
+                    <img src="{{ post.image_url }}" alt="{{ post.title }}">
+                </div>
+                <div class="blog-card-body">
+                    <div class="tag">
+                        <p>{{ post.category }}</p>
+                    </div>
+                    <h4 class="blog-card-title">{{ post.title }}</h4>
+                </div>
+                <div class="blog-card-footer">
+                    <p>{{ post.date_posted.strftime("%B %d, %Y") }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock content %}

@@ -1,55 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %}
+    Hobbies
+{% endblock title %}
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta property="og:title" content="Personal Portfolio">
-    <meta property="og:description" content="My Personal Portfolio">
-    <meta property="og:url" content="{{ url }}">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&display=swap" 
-        rel="stylesheet"> 
-
-    <link lang='sass' rel="stylesheet" href="./static/styles/main.css">
-    <link rel='icon' href='./static/img/favicon.ico' type='image/x-icon' />
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/a489d226ee.js" crossorigin="anonymous"></script>
-    <title>{{ title }}</title>
-</head>
-
-<body>
-    <header class="nav-bar">
-        <div class="nav-content">
-            <a href="/">
-                <div class="nav-logo">
-                    <img src="./static/img/logo.svg" />
-                </div>
-            </a>
-            <div class="nav-icon" onclick="toggleNav()">
-                <i class="fas fa-bars" id="icon"></i>
-            </div>
-            <nav>
-                <ul class="nav-menu" id="toggle-menu">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/#about">About</a></li>
-                    <li><a href="/#work">Experience</a></li>
-                    <li><a href="/hobbies">Hobbies</a></li>
-                    <li><a href="/#education">Education</a></li>
-                    <li><a href="/#map">Map</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
+{% block content %}
     <div id="hobbies" class="hobbies-section section">
         {% for member in members %}
-        <h2>{{ member.name }}'s Hobbies</h2>
+        <div class="tags top-tags">&lt;h2&gt;</div>
+        <h2 class="section-title">{% if members|length > 1 %}{{ member.name }}'s {% else %}My {% endif %} Hobbies</h2>
+        <div class="tags bottom-tags">&lt;/h2&gt;</div>
             <div class="hobby-container">
                 {% for hobby_data in member.hobbies %}
                     <div class="hobby-container-card">
@@ -63,7 +22,4 @@
             </div>
         {% endfor %}
     </div>
-
-    <script src="{{ url_for('static', filename='scripts/navmenu.js') }}"></script> 
-</body>
-</html>
+{% endblock content %}

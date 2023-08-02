@@ -1,69 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- index.html -->
+{% extends "base.html" %}
+{% block title %}
+    Home
+{% endblock title %}
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta property="og:title" content="Personal Portfolio">
-    <meta property="og:description" content="My Personal Portfolio">
-    <meta property="og:url" content="{{ url }}">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&display=swap" 
-        rel="stylesheet"> 
-    <link lang='sass' rel="stylesheet" href="./static/styles/main.css">
-    <link rel='icon' href='./static/img/favicon.ico' type='image/x-icon' />
-
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/a489d226ee.js" crossorigin="anonymous"></script>
-    <title>{{ title }}</title>
-</head>
-
-<body>
-    <header class="nav-bar">
-        <div class="nav-content">
-            <a href="/">
-                <div class="nav-logo">
-                    <img src="./static/img/logo.svg" />
-                </div>
-            </a>
-            <div class="nav-icon" onclick="toggleNav()">
-                <i class="fas fa-bars" id="icon"></i>
-            </div>
-            <nav>
-                <ul class="nav-menu" id="toggle-menu">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#work">Experience</a></li>
-                    <li><a href="/hobbies">Hobbies</a></li>
-                    <li><a href="#education">Education</a></li>
-                    <li><a href="#map">Map</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <div class="profile">
+{% block content %}
+    <section class="profile">
         <div id="profile-picture" class="profile-picture">
             {% for member in members %}
             <img src="{{ member.image }}" alt="{{ member.name }}">
             {% endfor %}
         </div>
-        <h1>{{ title }}</h1>
-    </div>
-    
+        <h1 class="main-title">{{ title }}</h1>
+        <a href="/#about" class="scroll-down">
+        </a>
+    </section>
+
     <!-- About Us Section -->
-    <div class="about-me section" id="about">
-        <h2>About {% if members|length > 1 %}Us {% else %}Me {% endif %}</h2>
+    <section class="about-me section" id="about">
+        <div class="tags top-tags">&lt;h2&gt;</div>
+        <h2 class="section-title">About {% if members|length > 1 %}Us {% else %}Me {% endif %}</h2>
+        <div class="tags bottom-tags">&lt;/h2&gt;</div>
         {% if members|length > 1 %}
         <div class="member-tabs">
             {% for member in members %}
             <div id="tab-about-{{ loop.index }}" class="tab-button{% if loop.index == 1 %} active{% endif %}" data-section='about' onclick="openTab('about', '{{ loop.index }}')">
-                {{ member.name }} 
+                <p>{{ member.name }}</p>
             </div>
         {% endfor %}
         </div>
@@ -72,54 +34,59 @@
         {% for member in members %}
         <div id="content-about-{{ loop.index }}" class="about-tab{% if loop.index == 1 %} active{% endif %}">
             <div class="about-info">
-                <h3>{{ member.name }} {{ member.lastname}}</h3>
+                <h2 class="about-hi">Hi!</h2>
+                <h3>I'm {{ member.name }} {{ member.lastname}} 👋</h3>
                 <p>{{ member.about }}</p>
             </div>
         </div>
         {% endfor %}
-    </div>
+    </section>
 
     <!-- Work Experience Section -->
-    <div class="work section" id="work">
-        <h2>Work Experience</h2>
+    <section class="work section" id="work">
+        <div class="tags top-tags">&lt;h2&gt;</div>
+        <h2 class="section-title">Work Experience</h2>
+        <div class="tags bottom-tags">&lt;/h2&gt;</div>
         {% if members|length > 1 %}
         <div class="member-tabs">
             {% for member in members %}
             <div id="tab-work-{{ loop.index }}" class="tab-button{% if loop.index == 1 %} active{% endif %}" data-section='work' onclick="openTab('work', '{{ loop.index }}')">
-                {{ member.name }}
+                <p>{{ member.name }}</p>
             </div>
             {% endfor %}
         </div>
         {% endif %}
 
         {% for member in members %}
-    <div id="content-work-{{ loop.index }}" class="work-tab{% if loop.index == 1 %} active{% endif %}">
-      {% for work in member.experience %}
-        <div class="work-item">
-          <!-- logo, position, company, date, description -->
-          <div class="work-logo">
-            <img src="{{ work.logo }}" alt="{{ work.company }}">
-          </div>
-          <div class="work-info">
-            <h3>{{ work.position }}</h3>
-            <h4>{{ work.company }}</h4>
-            <p><i>{{ work.dates }}</i></p>
-            <p>{{ work.description }}</p>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% endfor %}
-    </div> 
-  
+            <div id="content-work-{{ loop.index }}" class="work-tab{% if loop.index == 1 %} active{% endif %}">
+            {% for work in member.experience %}
+                <div class="work-item">
+                <!-- logo, position, company, date, description -->
+                <div class="work-logo">
+                    <img src="{{ work.logo }}" alt="{{ work.company }}">
+                </div>
+                <div class="work-info">
+                    <h3>{{ work.position }}</h3>
+                    <h4>{{ work.company }}</h4>
+                    <p><i>{{ work.dates }}</i></p>
+                    <p>{{ work.description }}</p>
+                </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% endfor %}
+    </section> 
+
     <!-- Education Section -->
-    <div class="education-section section" id="education">
-        <h2>Education</h2>
+    <section class="education-section section" id="education">
+        <div class="tags top-tags">&lt;h2&gt;</div>
+        <h2 class="section-title">Education</h2>
+        <div class="tags bottom-tags">&lt;/h2&gt;</div>
         {% if members|length > 1 %}
         <div class="member-tabs">
             {% for member in members %}
             <div id="tab-education-{{ loop.index }}" class="tab-button{% if loop.index == 1 %} active{% endif %}" data-section='education' onclick="openTab('education', '{{ loop.index }}')">
-                {{ member.name }}
+                <p>{{ member.name }}</p>
             </div>
             {% endfor %}
         </div>
@@ -127,26 +94,28 @@
 
         {% for member in members %}
     <div id="content-education-{{ loop.index }}" class="education-tab{% if loop.index == 1 %} active{% endif %}">
-      <ul class="timeline">
+    <ul class="timeline">
         {% for education in member.education %}
-          <li class="timeline-item">
+        <li class="timeline-item">
             <div class="timeline-date">{{ education.date }}</div>
             <div class="timeline-education">
-              <h3>{{ education.degree }}</h3>
-              <p>{{ education.institution }}</p>
+            <h3>{{ education.degree }}</h3>
+            <p>{{ education.institution }}</p>
             </div>
-          </li>
+        </li>
         {% endfor %}
-      </ul>
+    </ul>
     </div>
-  {% endfor %}
+    {% endfor %}
 
-    </div>
-    
+    </section>
+
     <!-- Map Section -->
-    <div class="map-container section" id="map">
+    <section class="map-container section" id="map">
         <div class="map-text">
+            <div class="tags top-tags">&lt;h2&gt;</div>
             <h2>Places {% if members|length > 1 %}we {% else %}I {% endif %} have been to</h2>
+            <div class="tags bottom-tags">&lt;/h2&gt;</div>
             <p>Here are some of the places {% if members|length > 1 %}we {% else %}I {% endif %} have been to.</p>
             {% if members|length > 1 %}
             <div class="color-boxes">
@@ -162,10 +131,8 @@
         </div>
         <div class="map">
             {{ map|safe }}
-      </div>
-    </div> 
+        </div>
+    </section> 
 
     <script src="{{ url_for('static', filename='scripts/opentab.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/navmenu.js') }}"></script> 
-</body>
-</html>
+{% endblock content %}

@@ -1,69 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta property="og:title" content="Personal Portfolio">
-    <meta property="og:description" content="My Personal Portfolio">
-    <meta property="og:url" content="{{ url }}">
+<!-- timeline.html -->
+{% extends "base.html" %}
+{% block title %}
+    Timeline
+{% endblock title %}
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&display=swap" 
-        rel="stylesheet"> 
-    <link lang='sass' rel="stylesheet" href="./static/styles/main.css">
-    <link rel='icon' href='./static/img/favicon.ico' type='image/x-icon' />
+{% block content %}
+    <section class="timeline-container section">
+        <div class="tags top-tags">&lt;h2&gt;</div>
+        <h2 class="section-title">{{ title }}</h2>
+        <div class="tags bottom-tags">&lt;/h2&gt;</div>
 
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/a489d226ee.js" crossorigin="anonymous"></script>
-    <title>{{ title }}</title>
-</head>
-<body>
-    <header class="nav-bar">
-        <div class="nav-content">
-            <a href="/">
-                <div class="nav-logo">
-                    <img src="./static/img/logo.svg" />
-                </div>
-            </a>
-            <div class="nav-icon" onclick="toggleNav()">
-                <i class="fas fa-bars" id="icon"></i>
-            </div>
-            <nav>
-                <ul class="nav-menu" id="toggle-menu">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#work">Experience</a></li>
-                    <li><a href="/hobbies">Hobbies</a></li>
-                    <li><a href="#education">Education</a></li>
-                    <li><a href="#map">Map</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <div class="timeline-container">
-        <h2>{{ title }}</h2>
-    
         <div class="form-container">
             <form class="timeline-form" id="timelineForm">
                 <!-- Name, Email, Content, Send button -->
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    <input type="text" id="name" name="name" placeholder="What's your name? 👀" required>
                     <span id="name-error" class="form-error-message"></span>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    <input type="email" id="email" name="email" placeholder="What's your email? 📧" required>
                     <span id="email-error" class="form-error-message"></span>
                 </div>
                 <div class="form-group">
-                    <label for="content">Content</label>
-                    <textarea id="content" name="content" placeholder="Enter your content" required></textarea>
+                    <label for="content">Comment</label>
+                    <textarea id="content" name="content" placeholder="Type a nice comment 🦜" required></textarea>
                     <span id="content-error" class="form-error-message"></span>
                 </div>
                 <span id="request-error" class="form-error-message request"></span>
@@ -71,7 +33,9 @@
             </form>
         </div>
 
-        <h2>Records</h2>
+        <div class="tags top-tags">&lt;h2&gt;</div>
+        <h2 class="section-title">Records</h2>
+        <div class="tags bottom-tags">&lt;/h2&gt;</div>
         <div class="timeline-posts">
             {% for post in posts %}
                 <div class="timeline-post">
@@ -92,9 +56,7 @@
                 </div>
             {% endfor %}
         </div>
-    </div>
+    </section>
     
-    <script src="{{ url_for('static', filename='scripts/navmenu.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/addpost.js') }}"></script> 
-</body>
-</html>
+{% endblock content %}
