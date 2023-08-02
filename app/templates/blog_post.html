@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ post.title }}
+{% endblock title %}
+
+{% block content %}
+    <div class="blog-post">
+        <div class="post-header">
+            <h1>{{ post.title }}</h1>
+            <p>Posted on {{ post.date_posted.strftime("%B %d, %Y") }}</p>
+        </div>
+        <hr>
+        <img src="{{ post.image_url }}" alt="{{ post.title }}">
+        <div class="post-content markdown-body">
+            <p>{{ content|safe }}</p>
+        </div>
+    </div>
+{% endblock content %}
