@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+    CMS
+{% endblock title %}
+
+{% block content %}
+    <section class="cms-container section">
+        <div class="tags top-tags">&lt;h2&gt;</div>
+        <h2 class="section-title">Create New Post</h2>
+        <div class="tags bottom-tags">&lt;/h2&gt;</div>
+        <div class="form-container">
+            <form class="cms-form" id="blogPostForm">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" placeholder="Enter blog post title" required>
+                    <span id="title-error" class="form-error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="title">Category</label>
+                    <input type="text" id="category" name="category" placeholder="Enter blog post category" required>
+                    <span id="category-error" class="form-error-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="image_url">Image URL</label>
+                    <input type="text" id="image_url" name="image_url" placeholder="Enter image url" required>
+                    <span id="image_url-error" class="form-error-message"></span>
+                </div>
+                <div class="form-group mkdown-editor">
+                    <label for="content">Content</label>
+                    <textarea id="myMarkdownEditor" name="content" rows="5" cols="33"></textarea>
+                    <span id="blog-content-error" class="form-error-message"></span>
+                </div>
+                <button id="addBlogPost" class="send-form-button">Add Post</button>
+            </form>
+        </div>
+    </section>
+    <script>
+        var simplemde = new SimpleMDE({ 
+            element: document.getElementById("myMarkdownEditor"),
+            spellChecker: false,
+            status: false,
+            toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "preview", "guide"]
+        });
+        document.getElementById('blogPostForm').onsubmit = function() {
+            document.getElementById('myMarkdownEditor').value = simplemde.value();
+        }
+    </script>
+    <script src="{{ url_for('static', filename='scripts/addblogpost.js') }}"></script> 
+{% endblock content %}

@@ -49,7 +49,7 @@
                             <h4 class="timeline-name">{{ post.name }} ({{ post.email }})</h4>
                         </div>
                         <p class="content">{{ post.content }}</p>
-                        <p class="created-at">{{ post.created_at.strftime("%B %d, %Y at %I:%M %p") }}</p>
+                        <p class="created-at">{{ post.created_at.strftime("%B %-d, %Y at %I:%M %p") }}</p>
                     </div>
                 </div>
             {% endfor %}

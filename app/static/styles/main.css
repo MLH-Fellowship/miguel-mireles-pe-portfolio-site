@@ -186,6 +186,7 @@ p {
     width: 90%;
     padding-left: 1em;
     margin: 0.5em;
+    text-align: left;
 }
 
 .tags {
@@ -449,6 +450,10 @@ p {
     box-shadow: var(--shadow-light);
     border-radius: 2px;
     border: 1px solid black;
+}
+
+.map-title {
+    padding-left: 0;
 }
 
 .education-section {
@@ -930,6 +935,25 @@ p {
     margin-bottom: 2em;
     border-radius: 2px;
     box-shadow: var(--shadow-light);
+}
+
+.cms-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.cms-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.mkdown-editor {
+    width: 95%;
+    align-items: normal;
 }
 
 

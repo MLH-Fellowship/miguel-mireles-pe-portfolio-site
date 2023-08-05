@@ -10,10 +10,16 @@ from pathlib import Path
 import regex
 import random
 import markdown
+import bleach
+from flask_basicauth import BasicAuth
 
 load_dotenv('./example.env')
 
 app = Flask(__name__)
+app.config['BASIC_AUTH_USERNAME'] = os.getenv("BASIC_AUTH_USERNAME")
+app.config['BASIC_AUTH_PASSWORD'] = os.getenv("BASIC_AUTH_PASSWORD")
+
+basic_auth = BasicAuth(app)
 
 if os.getenv("TESTING") == "true":
     print("Running in test mode")
@@ -25,6 +31,7 @@ else:
         user=os.getenv("MYSQL_USER"),
         password=os.getenv("MYSQL_PASSWORD"),
         host=os.getenv("MYSQL_HOST"),
+        charset='utf8mb4',
         port=3306
     )
 
@@ -156,15 +163,22 @@ def get_blog_post(id):
 
 @app.route('/api/blog_posts', methods=['POST'])
 def post_blog_post():
-    data = request.get_json()
-    if 'title' not in data or 'content' not in data or 'category' not in data or 'image_url' not in data:
-        return jsonify({'error': 'Invalid request'}), 400
-    blog_post = BlogPost.create(
-        title=data['title'],
-        content=data['content'],
-        category=data['category'],
-        image_url=data['image_url']
-    )
+    title = request.form.get('title')
+    content = request.form.get('content')
+    category = request.form.get('category')
+    image_url = request.form.get('image_url')
+
+    if not title:
+        return jsonify({'error': 'Title is required'}), 400
+    if not content:
+        return jsonify({'error': 'Content is required'}), 400
+    if not category:
+        return jsonify({'error': 'Category is required'}), 400
+    if not image_url:
+        return jsonify({'error': 'Image URL is required'}), 400
+    
+    blog_post = BlogPost.create(title=title, content=content, category=category, image_url=image_url)
+    
     return jsonify(model_to_dict(blog_post)), 200
 
 @app.route('/api/blog_posts/<id>', methods=['DELETE'])
@@ -178,6 +192,10 @@ def delete_blog_post(id):
     except Exception as e:
         return jsonify({'error': f'An error occurred while deleting the blog post: {str(e)}'}), 500
 
+@app.route('/cms')
+@basic_auth.required
+def cms():
+    return render_template('cms.html', title="CMS", url=os.getenv("URL"))
 
 # Malformed timeline post error handling
 def validate_form_input(input_value, error_message, validation_regex):
@@ -206,7 +224,7 @@ def validate_content(content):
 def post_time_line_post():
     name = request.form.get('name')
     email = request.form.get('email')
-    content = request.form.get('content')
+    content = bleach.clean(request.form.get('content'))
 
     validation_errors = {}
 

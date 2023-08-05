@@ -1,3 +1,4 @@
+bleach==6.0.0
 branca==0.6.0
 certifi==2023.5.7
 cffi==1.15.0
@@ -6,6 +7,7 @@ click==8.0.1
 cryptography==37.0.2
 Deprecated==1.2.14
 Flask==2.0.1
+Flask-BasicAuth==0.2.0
 folium==0.14.0
 idna==3.4
 importlib-resources==6.0.0
@@ -27,7 +29,9 @@ python-dotenv==0.17.1
 regex==2023.6.3
 requests==2.31.0
 rich==13.4.2
+six==1.16.0
 typing_extensions==4.7.1
 urllib3==2.0.3
+webencodings==0.5.1
 Werkzeug==2.0.1
 wrapt==1.15.0
