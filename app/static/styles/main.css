@@ -929,7 +929,6 @@ p {
     margin-top: 2em;
     padding: 1em;
     width: 75%;
-    text-align: justify;
     background-color: var(--color-light);
     border: 1px solid black;
     margin-bottom: 2em;
