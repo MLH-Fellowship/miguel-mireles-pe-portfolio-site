@@ -7,6 +7,7 @@ click==8.0.1
 cryptography==37.0.2
 Deprecated==1.2.14
 Flask==2.0.1
+Flask-BasicAuth==0.2.0
 folium==0.14.0
 idna==3.4
 importlib-resources==6.0.0

@@ -937,6 +937,25 @@ p {
     box-shadow: var(--shadow-light);
 }
 
+.cms-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.cms-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.mkdown-editor {
+    width: 95%;
+    align-items: normal;
+}
+
 
 /* Media Queries */
 @media (max-width: 1060px) {
