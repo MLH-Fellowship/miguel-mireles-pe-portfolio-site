@@ -81,24 +81,54 @@ document.getElementById('addTimelinePost').addEventListener('click', function(ev
         const timelinePosts = document.querySelector('.timeline-posts');
         const postElement = document.createElement('div');
         postElement.classList.add('timeline-post');
+
+        const timelineId = document.createElement('div');
+        timelineId.classList.add('timeline-id');
+        timelineId.textContent = `#${newPost.id}`;
+        postElement.appendChild(timelineId);
+
+        const timelineLineLeft = document.createElement('div');
+        timelineLineLeft.classList.add('timeline-line-left');
+        postElement.appendChild(timelineLineLeft);
+
+        const timelineLineRight = document.createElement('div');
+        timelineLineRight.classList.add('timeline-line-right');
+        postElement.appendChild(timelineLineRight);
+
+        const timelineContent = document.createElement('div');
+        timelineContent.classList.add('timeline-content');
+        
+        const contentHeader = document.createElement('div');
+        contentHeader.classList.add('timeline-content-header');
+        timelineContent.appendChild(contentHeader);
+
+        const timelineAvatar = document.createElement('div');
+        timelineAvatar.classList.add('timeline-avatar');
+        const avatarImage = document.createElement('img');
+        avatarImage.src = `https://www.gravatar.com/avatar/${newPost.email.toLowerCase().trim()}?s=200&d=identicon`;
+        timelineAvatar.appendChild(avatarImage);
+        contentHeader.appendChild(timelineAvatar);
+
+        const timelineName = document.createElement('h4');
+        timelineName.classList.add('timeline-name');
+        timelineName.textContent = `${newPost.name} (${newPost.email})`;
+        contentHeader.appendChild(timelineName);
+
+        const content = document.createElement('p');
+        content.classList.add('content');
+        content.textContent = newPost.content;
+        timelineContent.appendChild(content);
+
+        const createdAt = document.createElement('p');
+        createdAt.classList.add('created-at');
         const createdDate = new Date(newPost.created_at);
-        const options = { timeZone: 'GMT', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour: '2-digit', hour12: true };
+        const options = { timeZone: 'GMT', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour: '2-digit', hour12: true};
         const formattedDate = createdDate.toLocaleString('en-US', options);
-        postElement.innerHTML = `
-            <div class="timeline-id">#${newPost.id}</div>
-            <div class="timeline-line-left"></div>
-            <div class="timeline-line-right"></div>
-            <div class="timeline-content">
-                <div class="timeline-content-header">
-                    <div class="timeline-avatar">
-                        <img src="https://www.gravatar.com/avatar/${newPost.email.toLowerCase().trim()}?s=200&d=identicon" />
-                    </div>
-                    <h4 class="timeline-name">${newPost.name} (${newPost.email})</h4>
-                </div>
-                <p class="content">${newPost.content}</p>
-                <p class="created-at">${formattedDate}</p>
-            </div>
-        `;
+        createdAt.textContent = formattedDate;
+        timelineContent.appendChild(createdAt);
+
+        postElement.appendChild(timelineContent);
+
         timelinePosts.insertAdjacentElement('afterbegin', postElement);
 
         // Reset form values

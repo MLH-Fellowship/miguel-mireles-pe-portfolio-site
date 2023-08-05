@@ -21,7 +21,7 @@
                     <h4 class="blog-card-title">{{ post.title }}</h4>
                 </div>
                 <div class="blog-card-footer">
-                    <p>{{ post.date_posted.strftime("%B %d, %Y") }}</p>
+                    <p>{{ post.date_posted.strftime("%B %-d, %Y") }}</p>
                 </div>
             </div>
             {% endfor %}

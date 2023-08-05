@@ -186,6 +186,7 @@ p {
     width: 90%;
     padding-left: 1em;
     margin: 0.5em;
+    text-align: left;
 }
 
 .tags {
@@ -449,6 +450,10 @@ p {
     box-shadow: var(--shadow-light);
     border-radius: 2px;
     border: 1px solid black;
+}
+
+.map-title {
+    padding-left: 0;
 }
 
 .education-section {

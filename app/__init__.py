@@ -10,6 +10,7 @@ from pathlib import Path
 import regex
 import random
 import markdown
+import bleach
 
 load_dotenv('./example.env')
 
@@ -25,6 +26,7 @@ else:
         user=os.getenv("MYSQL_USER"),
         password=os.getenv("MYSQL_PASSWORD"),
         host=os.getenv("MYSQL_HOST"),
+        charset='utf8mb4',
         port=3306
     )
 
@@ -206,7 +208,7 @@ def validate_content(content):
 def post_time_line_post():
     name = request.form.get('name')
     email = request.form.get('email')
-    content = request.form.get('content')
+    content = bleach.clean(request.form.get('content'))
 
     validation_errors = {}
 
