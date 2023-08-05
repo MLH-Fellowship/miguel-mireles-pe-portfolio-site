@@ -273,7 +273,7 @@
     font-weight: 600;
     padding-bottom: .3em;
     font-size: 1.5em;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--color-gray);
   }
   
   .markdown-body h3 {
