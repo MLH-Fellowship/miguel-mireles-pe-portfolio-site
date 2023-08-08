@@ -87,7 +87,7 @@ p {
     padding-bottom: 10px;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 4;
 }
 
 .nav-content {
@@ -207,6 +207,10 @@ p {
     padding-left: 35%;
 }
 
+.main-title {
+    z-index: 1;
+}
+
 .profile {
     background-color: var(--color-dark) !important;
     text-align: center;
@@ -235,6 +239,7 @@ p {
     justify-content: center;
     flex-wrap: wrap;
     padding-top: 25vh;
+    z-index: 100;
 }
 
 .scroll-down {
@@ -953,6 +958,74 @@ p {
 .mkdown-editor {
     width: 95%;
     align-items: normal;
+}
+
+.profile-blob-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.blob-container {
+    min-height: 100vh;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    filter: blur(7vw);
+    z-index: 5;
+}
+
+.blob-container .blob {
+    background:#26C3F9;
+	height: 20vw;
+	width: 20vw;
+	border-radius: 40% 50% 30% 40%;
+  	animation: transform 18s ease-in-out infinite both alternate;
+	opacity:.7;
+	position: absolute;
+	left: 50%;
+	top: 40%;
+}
+
+.blob-container .blob.one {
+    left: -10%;
+    top: 10%;
+    background: #b1cbff;
+    animation: movement_one 12s ease-in-out infinite both;
+}
+
+.blob-container .blob.two {
+    left: 80%;
+    top: 60%;
+    background: #b1cbff;
+    animation: movement_two 14s ease-in-out infinite both;
+}
+
+@keyframes transform
+{
+    0%,
+  100% { border-radius: 33% 67% 70% 30% / 30% 40% 70% 70%; } 
+   20% { border-radius: 37% 63% 51% 49% / 37% 35% 35% 63%; } 
+   40% { border-radius: 36% 64% 64% 36% / 64% 48% 52% 26%; } 
+   60% { border-radius: 37% 63% 51% 49% / 30% 30% 70% 73%; } 
+   80% { border-radius: 40% 60% 42% 58% / 51% 51% 49% 59%; } 
+}
+
+
+@keyframes movement_one
+{
+    0%,
+    100% { transform: none; }
+    50% { transform: translate(50%, 20%) rotateY(10deg) scale(1); }
+}
+
+@keyframes movement_two
+{
+    0%,
+    100% { transform: none; }
+    50% { transform: translate(30%, 10%) rotateY(20deg) scale(1.2); }
 }
 
 

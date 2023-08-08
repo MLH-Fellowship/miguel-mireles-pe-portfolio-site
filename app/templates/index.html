@@ -4,6 +4,10 @@
 
 {% block content %}
     <section class="profile">
+        <div class="blob-container">
+            <div class="blob one"></div>
+            <div class="blob two"></div>
+        </div>
         <div id="profile-picture" class="profile-picture">
             {% for member in members %}
             <img src="{{ member.image }}" alt="{{ member.name }}">
