@@ -87,7 +87,7 @@ p {
     padding-bottom: 10px;
     position: sticky;
     top: 0;
-    z-index: 4;
+    z-index: 100;
 }
 
 .nav-content {
@@ -252,6 +252,7 @@ p {
     right: 0;
     top: 90vh;
     border-radius: 2em;
+    z-index: 7;
 }
 
 .scroll-down:before {
@@ -991,7 +992,7 @@ p {
 
 .blob-container .blob.one {
     left: -10%;
-    top: 10%;
+    top: 17%;
     background: #b1cbff;
     animation: movement_one 12s ease-in-out infinite both;
 }
