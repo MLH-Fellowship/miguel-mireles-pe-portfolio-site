@@ -7,9 +7,33 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Run Tests
+    env:
+      TESTING: true
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10.12'
+
+      - name: Setup Python Virtual Environment
+        run: python -m venv python3-virtualenv
+
+      - name: Install Dependencies
+        run: python3-virtualenv/bin/pip install -r requirements.txt
+
+      - name: Run Tests
+        run: ./run_test.sh
+
   deploy:
     name: "Deploy to VPS"
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Configure SSH
         run: |
@@ -30,3 +54,67 @@ jobs:
 
       - name: Deploy Site
         run: ssh my-vps '~/redeploy-site.sh'
+
+      - name: Check Container Status
+        run: ssh my-vps 'docker ps'
+
+      - name: Send Discord Notification
+        if: success()
+        run: |
+          curl -s -H "Content-Type: application/json" \
+               -X POST "${{ secrets.DISCORD_WEBHOOK }}" \
+               -d '{
+                 "username": "Deploy Buddy",
+                 "avatar_url": "https://repository-images.githubusercontent.com/130118224/a2c75780-e0a9-11eb-8494-3581a0b1c93b",
+                 "embeds": [
+                   {
+                     "title": "🚀 Deployment Successful",
+                     "description": "Deployed commit `${{ github.sha }}` by `{{ github.actor }}` to production.",
+                     "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                     "color": 3066993,
+                     "fields": [
+                        {
+                          "name": "Branch",
+                          "value": "`${{ github.ref }}`",
+                          "inline": true
+                        },
+                        {
+                          "name": "Time",
+                          "value": "`${{ steps.get-date.outputs.date }}`",
+                          "inline": true
+                        }
+                    ]
+                  }
+                ]
+              }'
+              
+      - name: Send Failure Discord Notification
+        if: failure()
+        run: |
+            curl -s -H "Content-Type: application/json" \
+                 -X POST "${{ secrets.DISCORD_WEBHOOK }}" \
+                 -d '{
+                   "username": "Deploy Buddy",
+                   "avatar_url": "https://repository-images.githubusercontent.com/130118224/a2c75780-e0a9-11eb-8494-3581a0b1c93b",
+                   "embeds": [
+                     {
+                       "title": "🚨 Deployment Failed",
+                       "description": "Failed to deploy commit`${{ github.sha }}` by `{{ github.actor }}` to production.",
+                       "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                       "color": 16711680,
+                       "fields": [
+                          {
+                            "name": "Branch",
+                            "value": "`${{ github.ref }}`",
+                            "inline": true
+                          },
+                          {
+                            "name": "Time",
+                            "value": "`${{ steps.get-date.outputs.date }}`",
+                            "inline": true
+                          }
+                      ]
+                    }
+                  ]
+                }'
+                     
