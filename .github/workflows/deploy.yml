@@ -60,7 +60,7 @@ jobs:
 
       - name: Get Current Date
         id: get-date
-        run: echo "::set-output name=date::$(date + '%Y-%m-%d %H:%M:%S')"
+        run: echo "date=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
         shell: bash
 
       - name: Send Discord Notification
@@ -85,7 +85,7 @@ jobs:
                         },
                         {
                           "name": "Time",
-                          "value": "`${{ steps.get-date.outputs.date }}`",
+                          "value": "`${{ env.date }}`",
                           "inline": true
                         }
                     ]
@@ -115,7 +115,7 @@ jobs:
                           },
                           {
                             "name": "Time",
-                            "value": "`${{ steps.get-date.outputs.date }}`",
+                            "value": "`${{ env.date }}`",
                             "inline": true
                           }
                       ]
