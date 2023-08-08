@@ -58,6 +58,11 @@ jobs:
       - name: Check Container Status
         run: ssh my-vps 'docker ps'
 
+      - name: Get Current Date
+        id: get-date
+        run: echo "::set-output name=date::$(date + '%Y-%m-%d %H:%M:%S')"
+        shell: bash
+
       - name: Send Discord Notification
         if: success()
         run: |
@@ -69,7 +74,7 @@ jobs:
                  "embeds": [
                    {
                      "title": "🚀 Deployment Successful",
-                     "description": "Deployed commit `${{ github.sha }}` by `{{ github.actor }}` to production.",
+                     "description": "Deployed commit `${{ github.sha }}` by `${{ github.actor }}` to production.",
                      "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
                      "color": 3066993,
                      "fields": [
@@ -99,7 +104,7 @@ jobs:
                    "embeds": [
                      {
                        "title": "🚨 Deployment Failed",
-                       "description": "Failed to deploy commit`${{ github.sha }}` by `{{ github.actor }}` to production.",
+                       "description": "Failed to deploy commit`${{ github.sha }}` by `${{ github.actor }}` to production.",
                        "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
                        "color": 16711680,
                        "fields": [
