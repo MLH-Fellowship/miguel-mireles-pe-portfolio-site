@@ -5,6 +5,7 @@ const titleField = document.getElementById('title');
 const imageUrlField = document.getElementById('image_url');
 const contentField = document.getElementById('myMarkdownEditor');
 const categoryField = document.getElementById('category');
+const requestError = document.getElementById('blog-request-error');
 const form = document.getElementById('blogPostForm');
 
 function validateFormInput(input, errorElement, validationRegex, requiredMessage, invalidMessage) {
@@ -20,11 +21,19 @@ function validateFormInput(input, errorElement, validationRegex, requiredMessage
     return true;
 }
 
+function validateMarkdownContent(input, errorElement, requiredMessage) {
+    errorElement.innerHTML = '';
+    if (!input.value.trim()) {
+        errorElement.innerHTML = requiredMessage;
+        return false;
+    }
+    return true;
+}
+
 function checkFormValidity() {
     var valid = true;
     const titleRegex = /^.+$/; // Adjust as needed
     const urlRegex = /^https?:\/\/[^ \n]+$/i;
-    const contentRegex = /^.+$/;
     const categoryRegex = /^.+$/;
 
     valid &= validateFormInput(
@@ -51,6 +60,12 @@ function checkFormValidity() {
         'Category is invalid'
     );
 
+    valid &= validateMarkdownContent(
+        contentField,
+        document.getElementById('blog-content-error'),
+        'Content is required'
+    );
+
     return valid;
 }
 
@@ -64,8 +79,14 @@ function createPost(title, imageUrl, category) {
     })
     .then(response => {
         if (!response.ok) {
-            console.log(response);
-            return response.text();
+            switch (response.status) {
+                case 429:
+                    throw new Error('Too many requests');
+                case 500:
+                    throw new Error('Internal server error');
+                default:
+                    throw new Error('Unknown error');
+            }
         }
         return response.json();
     })
@@ -76,11 +97,13 @@ function createPost(title, imageUrl, category) {
         titleField.value = '';
         imageUrlField.value = '';
         categoryField.value = '';
+        requestError.innerHTML = '';
         simplemde.value(''); 
         alert('Post created successfully!');
     })
     .catch(e => {
-        console.log('There was a problem with the request:', e.message);
+        console.error(error);
+        requestError.innerHTML = error.message;
     });
 }
 
